@@ -1,0 +1,30 @@
+---
+# defaults file for docker
+docker_apps:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+docker_apps_desired_state: present
+docker_service_name: docker
+docker_service_desired_state: restarted
+docker_service_desired_boot_enabled: yes
+docker_group: docker
+docker_group_desired_state: present
+docker_user: docker
+docker_user_home: "/home/{{ docker_user }}"
+docker_user_shell: /bin/bash
+docker_user_desired_state: present
+docker_centos_pre_reqs:
+  - device-mapper-persistent-data
+  - lvm2
+docker_centos_pre_reqs_desired_state: present
+docker_repo_centos: https://download.docker.com/linux/centos/7/$basearch/stable
+docker_repo_centos_gpg_key: https://download.docker.com/linux/centos/gpg
+docker_repo_centos_name: docker-ce-stable
+docker_repo_centos_description: Docker CE Stable - $basearch
+docker_repo_centos_gpgcheck: yes
+docker_repo_centos_enabled: yes
+docker_repo_centos_filename: docker-ce
+docker_repo_centos_desired_state: present
+docker_repo_debian: deb [arch=amd64] https://packagecloud.io/AtomEditor/docker/any/ any main
+docker_repo_debian_filename: docker

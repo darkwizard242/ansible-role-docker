@@ -1,0 +1,38 @@
+---
+# tasks file for docker - CentOS
+
+- name: Creating group "{{ docker_group }}" as a pre-requisite for docker on CentOS systems.
+  group:
+    name: "{{ docker_group }}"
+    state: "{{ docker_group_desired_state }}"
+- name: Adding (or creating if doesn't exist) desired user "{{ docker_user }}"  to put in group "{{ docker_group }}".
+  user:
+    name: "{{ docker_user }}"
+    comment: Docker user
+    group: "{{ docker_group }}"
+    home: "{{ docker_user_home }}"
+    shell: "{{ docker_user_shell }}"
+    state: "{{ docker_user_desired_state }}"
+- name: Installing {{ docker_centos_pre_reqs }} on CentOS systems.
+  yum:
+    name: "{{ docker_centos_pre_reqs }}"
+    state: "{{ docker_centos_pre_reqs_desired_state }}"
+    update_cache: yes
+- name: Adding stable repository for {{ docker_repo_centos }} on CentOS systems.
+  yum_repository:
+    name: "{{ docker_repo_centos_name }}"
+    description: "{{ docker_repo_centos_description }}"
+    baseurl: "{{ docker_repo_centos }}"
+    gpgcheck: "{{ docker_repo_centos_gpgcheck }}"
+    gpgkey: "{{ docker_repo_centos_gpg_key }}"
+    file: "{{ docker_repo_centos_filename }}"
+    state: "{{ docker_repo_centos_desired_state }}"
+    enabled: "{{ docker_repo_centos_enabled }}"
+- name: Installing {{ docker_apps }} on CentOS systems.
+  yum:
+    name: "{{ docker_apps }}"
+    state: "{{ docker_apps_desired_state }}"
+    update_cache: yes
+  notify:
+    - "set_{{ docker_service_name }}_service_state"
+    - "set_{{ docker_service_name }}_service_boot_state"
