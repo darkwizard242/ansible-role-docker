@@ -6,13 +6,28 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 
-DOCKER_PACKAGE = 'docker'
+DOCKER_USER = 'docker'
+DOCKER_GROUP = 'docker'
+DOCKER_HOME = '/home/docker'
+DOCKER_PACKAGE = ['docker-ce', 'docker-ce-cli', 'containerd']
 DOCKER_BINARY_PATH = '/usr/bin/docker'
 DOCKER_DEBIAN_REPO = '/etc/apt/sources.list.d/docker.list'
-DOCKER_EL_REPO = '/etc/yum.repos.d/docker.repo'
+DOCKER_EL_REPO = '/etc/yum.repos.d/docker-ce.repo'
 
 
-def test_docker_package_installed(host):
+def test_docker_user_exists(host):
+    host.user('DOCKER_USER')
+
+
+def test_docker_group_exists(host):
+    host.group('DOCKER_GROUP')
+
+
+def test_docker_home_exists(host):
+    host.file('DOCKER_HOME').exists
+
+
+def test_docker_packages_installed(host):
     host.package("DOCKER_PACKAGE").is_installed
 
 
@@ -35,5 +50,4 @@ def test_docker_repo_file(host):
 
 
 def test_docker_binary_which(host):
-    host.check_output('which docker') == DOCKER_BINARY_PATH or \
-      host.check_output('whereis docker') == DOCKER_BINARY_PATH
+    host.check_output('which docker') == DOCKER_BINARY_PATH
