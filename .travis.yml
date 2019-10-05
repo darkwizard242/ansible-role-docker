@@ -17,8 +17,8 @@ env:
     - DISTRO: centos-7
     - DISTRO: ubuntu-18.04
     - DISTRO: ubuntu-16.04
-    # - DISTRO: debian-buster
-    # - DISTRO: debian-stretch
+    - DISTRO: debian-buster
+    - DISTRO: debian-stretch
     # - DISTRO: debian-jessie
 
 # addons:
@@ -39,6 +39,6 @@ before_script:
 
 script:
   # - sonar-scanner -Dsonar.projectVersion=$TRAVIS_BRANCH\_$TRAVIS_JOB_NUMBER
-  - molecule test
+  - molecule converge
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/?branch=master
