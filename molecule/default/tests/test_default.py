@@ -44,13 +44,13 @@ def test_docker_binary_file(host):
 def test_docker_repo_exists(host):
     host.file('DOCKER_DEBIAN_REPO').exists or \
       host.file('DOCKER_EL_REPO').exists or \
-        host.file('DOCKER_UBUNTU_REPO').exists
+      host.file('DOCKER_UBUNTU_REPO').exists
 
 
 def test_docker_repo_file(host):
     host.file('DOCKER_DEBIAN_REPO').is_file or \
       host.file('DOCKER_EL_REPO').is_file or \
-        host.file('DOCKER_UBUNTU_REPO').is_file
+      host.file('DOCKER_UBUNTU_REPO').is_file
 
 
 def test_docker_service_is_running(host):
