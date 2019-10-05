@@ -36,3 +36,6 @@
     state: "{{ docker_apps_desired_state }}"
     force_apt_get: yes
     update_cache: yes
+  notify:
+    - "set_{{ docker_service_name }}_service_state"
+    - "set_{{ docker_service_name }}_service_boot_state"
