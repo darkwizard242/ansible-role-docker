@@ -11,8 +11,10 @@ DOCKER_GROUP = 'docker'
 DOCKER_HOME = '/home/docker'
 DOCKER_PACKAGE = ['docker-ce', 'docker-ce-cli', 'containerd']
 DOCKER_BINARY_PATH = '/usr/bin/docker'
-DOCKER_DEBIAN_REPO = '/etc/apt/sources.list.d/docker.list'
 DOCKER_EL_REPO = '/etc/yum.repos.d/docker-ce.repo'
+DOCKER_DEBIAN_REPO = '/etc/apt/sources.list.d/docker.list'
+DOCKER_UBUNTU_REPO = '/etc/apt/sources.list.d/docker.list'
+DOCKER_SERVICE = 'docker'
 
 
 def test_docker_user_exists(host):
@@ -41,12 +43,22 @@ def test_docker_binary_file(host):
 
 def test_docker_repo_exists(host):
     host.file('DOCKER_DEBIAN_REPO').exists or \
-      host.file('DOCKER_EL_REPO').exists
+      host.file('DOCKER_EL_REPO').exists or \
+        host.file('DOCKER_UBUNTU_REPO').exists
 
 
 def test_docker_repo_file(host):
     host.file('DOCKER_DEBIAN_REPO').is_file or \
-      host.file('DOCKER_EL_REPO').is_file
+      host.file('DOCKER_EL_REPO').is_file or \
+        host.file('DOCKER_UBUNTU_REPO').is_file
+
+
+def test_docker_service_is_running(host):
+    host.service('DOCKER_SERVICE').is_running
+
+
+def test_docker_service_is_enabled(host):
+    host.service('DOCKER_SERVICE').is_enabled
 
 
 def test_docker_binary_which(host):
