@@ -3,11 +3,11 @@
 
 - name: Import install_debian.yml if OS distribution is Debian
   import_tasks: install_debian.yml
-  when: ansible_distribution == "Debian"
+  when: ansible_distribution == "Debian" and ansible_architecture == 'amd64' or ansible_architecture == 'armhf' or ansible_architecture == 'arm64'
 
 - name: Import install_ubuntu.yml if OS distribution is Ubuntu
   import_tasks: install_ubuntu.yml
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" and ansible_architecture == 'amd64' or ansible_architecture == 'armhf' or ansible_architecture == 'arm64' or ansible_architecture == 'ppc64el' or ansible_architecture == 's390x'
 
 - name: Import install_el.yml if OS distribution is CentOS
   import_tasks: install_el.yml
