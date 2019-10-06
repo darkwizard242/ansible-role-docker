@@ -19,11 +19,10 @@ env:
     - DISTRO: ubuntu-16.04
     - DISTRO: debian-buster
     - DISTRO: debian-stretch
-    # - DISTRO: debian-jessie
 
-# addons:
-#   sonarcloud:
-#     organization: "tech-overlord-github"
+addons:
+  sonarcloud:
+    organization: "tech-overlord-github"
 
 before_install:
   - sudo apt-get update
@@ -38,7 +37,7 @@ before_script:
   - cd darkwizard242.$ROLE_NAME
 
 script:
-  # - sonar-scanner -Dsonar.projectVersion=$TRAVIS_BRANCH\_$TRAVIS_JOB_NUMBER
+  - sonar-scanner -Dsonar.projectVersion=$TRAVIS_BRANCH\_$TRAVIS_JOB_NUMBER
   - molecule converge
-# notifications:
-#   webhooks: https://galaxy.ansible.com/api/v1/notifications/?branch=master
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/?branch=master
