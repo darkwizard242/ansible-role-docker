@@ -1,0 +1,43 @@
+---
+sudo: required
+
+dist: bionic
+
+language: python
+python:
+  - "3.7"
+
+services:
+  - docker
+
+env:
+  global:
+    - ROLE_NAME: docker
+  matrix:
+    - DISTRO: centos-7
+    - DISTRO: ubuntu-18.04
+    - DISTRO: ubuntu-16.04
+    - DISTRO: debian-buster
+    - DISTRO: debian-stretch
+
+addons:
+  sonarcloud:
+    organization: "tech-overlord-github"
+
+before_install:
+  - sudo apt-get update
+
+install:
+  - pip3 install molecule docker
+
+before_script:
+  # Rename project directory to actual Ansible Galaxy role name and switch to it.
+  - cd ../
+  - mv ansible-role-$ROLE_NAME darkwizard242.$ROLE_NAME
+  - cd darkwizard242.$ROLE_NAME
+
+script:
+  - sonar-scanner -Dsonar.projectVersion=$TRAVIS_BRANCH\_$TRAVIS_JOB_NUMBER
+  - molecule test
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/?branch=master

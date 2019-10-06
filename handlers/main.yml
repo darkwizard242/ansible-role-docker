@@ -1,0 +1,14 @@
+---
+# handlers file for docker
+# Theese handlers will only run when the virtualization type is NOT docker itself as docker doesn't support/handle systemd very well!
+
+- name: "set_{{ docker_service_name }}_service_state"
+  service:
+    name: "{{ docker_service_name }}"
+    state: "{{ docker_service_desired_state }}"
+  when: ansible_virtualization_type != "docker"
+- name: "set_{{ docker_service_name }}_service_boot_state"
+  service:
+    name: "{{ docker_service_name }}"
+    enabled: "{{ docker_service_desired_boot_enabled }}"
+  when: ansible_virtualization_type != "docker"

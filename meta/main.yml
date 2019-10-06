@@ -1,0 +1,29 @@
+---
+galaxy_info:
+  role_name: docker
+  author: Ali Muhammad
+  description: Docker-ce stable version installation/uninstallation.
+  company: none
+  license: MIT
+  min_ansible_version: 2.4
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+    - name: EL
+      versions:
+        - 7
+
+  galaxy_tags:
+    - docker
+    - containerization
+    - system
+    - os
+
+dependencies: []
