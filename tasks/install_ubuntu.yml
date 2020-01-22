@@ -14,7 +14,7 @@
     shell: "{{ docker_user_shell }}"
     state: "{{ docker_user_desired_state }}"
 - name: Installing {{ docker_ubuntu_pre_reqs }} on Ubuntu systems.
-  yum:
+  apt:
     name: "{{ docker_ubuntu_pre_reqs }}"
     state: "{{ docker_ubuntu_pre_reqs_desired_state }}"
     force_apt_get: yes
