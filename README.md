@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/darkwizard242/ansible-role-docker.svg?branch=master)](https://travis-ci.com/darkwizard242/ansible-role-docker) ![Ansible Role](https://img.shields.io/ansible/role/43814?color=dark%20green%20) ![Ansible Role](https://img.shields.io/ansible/role/d/43814?label=role%20downloads) ![Ansible Quality Score](https://img.shields.io/ansible/quality/43814?label=ansible%20quality%20score) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ansible-role-docker&metric=alert_status)](https://sonarcloud.io/dashboard?id=ansible-role-docker) ![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/darkwizard242/ansible-role-docker?label=release) ![GitHub repo size](https://img.shields.io/github/repo-size/darkwizard242/ansible-role-docker?color=orange&style=flat-square)
+
 # Ansible Role: docker
 
 Role to install (_by default_) `docker` package or uninstall (_if passed as var_) on **Ubuntu**, **Debian** and **CentOS** systems.
