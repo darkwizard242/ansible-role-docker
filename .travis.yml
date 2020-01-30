@@ -1,6 +1,5 @@
 ---
-sudo: required
-
+os: linux
 dist: bionic
 
 language: python
@@ -14,6 +13,7 @@ env:
   global:
     - ROLE_NAME: docker
   matrix:
+    - DISTRO: centos-8
     - DISTRO: centos-7
     - DISTRO: ubuntu-18.04
     - DISTRO: ubuntu-16.04
@@ -26,6 +26,7 @@ addons:
 
 before_install:
   - sudo apt-get update
+  - sudo apt-get ugprade -y
 
 install:
   - pip3 install molecule docker
