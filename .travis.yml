@@ -28,7 +28,7 @@ before_install:
   - sudo apt-get upgrade -y
 
 install:
-  - pip3 install molecule docker
+  - pip3 install molecule docker ansible-lint flake8 testinfra
 
 before_script:
   # Rename project directory to actual Ansible Galaxy role name and switch to it.
