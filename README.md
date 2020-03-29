@@ -2,7 +2,7 @@
 
 # Ansible Role: docker
 
-Role to install (_by default_) `docker` package or uninstall (_if passed as var_) on **Ubuntu**, **Debian** and **CentOS** systems.
+Role to install (_by default_) [docker](https://www.docker.com/) package or uninstall (_if passed as var_) on **Ubuntu**, **Debian** and **CentOS** systems.
 
 ## Requirements
 
@@ -119,7 +119,7 @@ For default behaviour of role (i.e. installation of **docker** package) in ansib
 ```yaml
 - hosts: servers
   roles:
-    - role: darkwizard242.docker
+    - darkwizard242.docker
 ```
 
 For customizing behavior of role (i.e. utilizing an existing or creating a new user to be added to docker group - example shown below is using `darkwizard242` as a user) in ansible playbooks.
@@ -127,9 +127,9 @@ For customizing behavior of role (i.e. utilizing an existing or creating a new u
 ```yaml
 - hosts: servers
   roles:
-    - role: darkwizard242.docker
-      vars:
-        docker_user: darkwizard242
+    - darkwizard242.docker
+  vars:
+    docker_user: darkwizard242
 ```
 
 For customizing behavior of role (i.e. un-installation of **docker-ce, docker-ce-cli, containerd.io** packages) in ansible playbooks.
@@ -137,9 +137,9 @@ For customizing behavior of role (i.e. un-installation of **docker-ce, docker-ce
 ```yaml
 - hosts: servers
   roles:
-    - role: darkwizard242.docker
-      vars:
-        docker_apps_desired_state: absent
+    - darkwizard242.docker
+  vars:
+    docker_apps_desired_state: absent
 ```
 
 ## License
