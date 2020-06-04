@@ -14,6 +14,7 @@ env:
     - ROLE_NAME: docker
   matrix:
     - DISTRO: centos-7
+    - DISTRO: ubuntu-20.04
     - DISTRO: ubuntu-18.04
     - DISTRO: ubuntu-16.04
     - DISTRO: debian-buster
