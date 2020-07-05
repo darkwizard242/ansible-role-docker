@@ -1,11 +1,12 @@
 ---
-# tasks file for docker - Ubuntu
+# tasks file for docker | Ubuntu OS
 
-- name: Creating group "{{ docker_group }}" as a pre-requisite for docker on Ubuntu systems.
+- name: Ubuntu OS | Creating group "{{ docker_group }}" as a pre-requisite for docker
   group:
     name: "{{ docker_group }}"
     state: "{{ docker_group_desired_state }}"
-- name: Adding (or creating if doesn't exist) desired user "{{ docker_user }}"  to put in group "{{ docker_group }}".
+
+- name: Ubuntu OS | Adding (or creating if doesn't exist) desired user "{{ docker_user }}"  to put in group "{{ docker_group }}".
   user:
     name: "{{ docker_user }}"
     comment: Docker user
@@ -13,17 +14,20 @@
     home: "{{ docker_user_home }}"
     shell: "{{ docker_user_shell }}"
     state: "{{ docker_user_desired_state }}"
-- name: Installing {{ docker_ubuntu_pre_reqs }} on Ubuntu systems.
+
+- name: Ubuntu OS | Installing {{ docker_ubuntu_pre_reqs }}
   apt:
     name: "{{ docker_ubuntu_pre_reqs }}"
     state: "{{ docker_ubuntu_pre_reqs_desired_state }}"
     force_apt_get: yes
     update_cache: yes
-- name: Add gpg signing key for {{ docker_apps }}.
+
+- name: Ubuntu OS | Add gpg signing key for {{ docker_apps }}.
   apt_key:
     url: "{{ docker_repo_ubuntu_gpg_key }}"
     state: present
-- name: Adding repository "{{ docker_repo_ubuntu_when_x86_64 }}" on Ubuntu systems when system architecture is x86_64.
+
+- name: Ubuntu OS | Adding repository "{{ docker_repo_ubuntu_when_x86_64 }}" when system architecture is x86_64.
   apt_repository:
     repo: "{{ docker_repo_ubuntu_when_x86_64 }}"
     state: "{{ docker_repo_ubuntu_desired_state }}"
@@ -31,7 +35,8 @@
     codename: "{{ ansible_lsb['codename'] }}"
     update_cache: yes
   when: ansible_architecture == 'x86_64'
-- name: Adding repository "{{ docker_repo_ubuntu }}" on Ubuntu systems when system architecture is not x86_64.
+
+- name: Ubuntu OS | Adding repository "{{ docker_repo_ubuntu }}" when system architecture is not x86_64.
   apt_repository:
     repo: "{{ docker_repo_ubuntu }}"
     state: "{{ docker_repo_ubuntu_desired_state }}"
@@ -39,7 +44,8 @@
     codename: "{{ ansible_lsb['codename'] }}"
     update_cache: yes
   when: ansible_architecture != 'x86_64'
-- name: Installing {{ docker_apps }} on Ubuntu systems.
+
+- name: Ubuntu OS | Installing {{ docker_apps }}
   apt:
     name: "{{ docker_apps }}"
     state: "{{ docker_apps_desired_state }}"
