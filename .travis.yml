@@ -26,7 +26,7 @@ addons:
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get upgrade -y
+  # - sudo apt-get upgrade -y
 
 install:
   - pip3 install molecule==3.0.6 docker ansible-lint flake8 testinfra
