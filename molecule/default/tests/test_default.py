@@ -88,4 +88,7 @@ def test_docker_repo_file(host):
 
 
 def test_docker_binary_which(host):
+    """
+    Tests the output to confirm docker's binary location.
+    """
     assert host.check_output('which docker') == PACKAGE_BINARY
