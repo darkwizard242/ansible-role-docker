@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: docker
-  author: Ali Muhammad
+  author: darkwizard242
   description: Docker-ce stable version installation/uninstallation.
   company: none
   license: MIT
