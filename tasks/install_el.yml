@@ -27,7 +27,7 @@
     description: "{{ docker_repo_centos_description }}"
     baseurl: "{{ docker_repo_centos }}"
     gpgcheck: "{{ docker_repo_centos_gpgcheck }}"
-    gpgkey: "{{ docker_repo_centos_gpg_key }}"
+    gpgkey: "{{ docker_repo_gpg_key }}"
     file: "{{ docker_repo_centos_filename }}"
     state: "{{ docker_repo_centos_desired_state }}"
     enabled: "{{ docker_repo_centos_enabled }}"
