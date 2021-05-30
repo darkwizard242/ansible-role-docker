@@ -1,21 +1,8 @@
 ---
 # tasks file for docker | Debian
 
-- name: Debian | Ensure group "{{ docker_group }}" exists.
-  group:
-    name: "{{ docker_group }}"
-    state: "{{ docker_group_desired_state }}"
-
-- name: Debian | Ensure user "{{ docker_user }}" with group "{{ docker_group }}" exists.
-  user:
-    name: "{{ docker_user }}"
-    comment: Docker user
-    group: "{{ docker_group }}"
-    home: "{{ docker_user_home }}"
-    shell: "{{ docker_user_shell }}"
-    state: "{{ docker_user_desired_state }}"
-
 - name: Debian | Installing {{ docker_debian_pre_reqs }}
+  become: true
   apt:
     name: "{{ docker_debian_pre_reqs }}"
     state: "{{ docker_debian_pre_reqs_desired_state }}"
@@ -23,11 +10,13 @@
     update_cache: yes
 
 - name: Debian | Ensure docker gpg key exists.
+  become: true
   apt_key:
     url: "{{ docker_repo_gpg_key }}"
     state: present
 
 - name: Debian | Adding docker repository.
+  become: true
   apt_repository:
     repo: "{{ docker_repo_debian }}"
     state: "{{ docker_repo_debian_desired_state }}"
@@ -36,6 +25,7 @@
     update_cache: yes
 
 - name: Debian | Installing {{ docker_apps }}
+  become: true
   apt:
     name: "{{ docker_apps }}"
     state: "{{ docker_apps_desired_state }}"
