@@ -13,7 +13,7 @@
   become: true
   apt_key:
     url: "{{ docker_repo_gpg_key }}"
-    state: present
+    state: "{{ docker_repo_debian_desired_state }}"
 
 - name: Debian | Adding docker repository.
   become: true
