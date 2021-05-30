@@ -2,12 +2,14 @@
 # tasks file for docker | EL Family
 
 - name: EL Family | Installing {{ docker_centos_pre_reqs }}
+  become: true
   yum:
     name: "{{ docker_centos_pre_reqs }}"
     state: "{{ docker_centos_pre_reqs_desired_state }}"
     update_cache: yes
 
 - name: EL Family | Adding stable repository for {{ docker_repo_centos }}
+  become: true
   yum_repository:
     name: "{{ docker_repo_centos_name }}"
     description: "{{ docker_repo_centos_description }}"
@@ -19,6 +21,7 @@
     enabled: "{{ docker_repo_centos_enabled }}"
 
 - name: EL Family | Installing {{ docker_apps }}
+  become: true
   yum:
     name: "{{ docker_apps }}"
     state: "{{ docker_apps_desired_state }}"
