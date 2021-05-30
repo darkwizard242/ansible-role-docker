@@ -1,5 +1,18 @@
 ---
 # defaults file for docker
+
+# Common stuff
+docker_architecture_map:
+  # this first entry seems redundant
+  # (but it's required for reasons)
+  amd64: amd64
+  x86_64: amd64
+  # todo: arm32 / armelv5
+  armv6l: armhfv6
+  armv7l: armhfv6
+  aarch64: arm64
+  32-bit: "386"
+  64-bit: amd64
 docker_apps:
   - docker-ce
   - docker-ce-cli
@@ -14,6 +27,9 @@ docker_user: docker
 docker_user_home: "/home/{{ docker_user }}"
 docker_user_shell: /bin/bash
 docker_user_desired_state: present
+docker_repo_gpg_key: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
+
+# CentOS Stuff
 docker_centos_pre_reqs:
   - device-mapper-persistent-data
   - lvm2
@@ -26,27 +42,29 @@ docker_repo_centos_gpgcheck: yes
 docker_repo_centos_enabled: yes
 docker_repo_centos_filename: docker-ce
 docker_repo_centos_desired_state: present
-docker_ubuntu_pre_reqs:
-  - apt-transport-https
-  - ca-certificates
-  - curl
-  - gnupg-agent
-  - software-properties-common
-docker_ubuntu_pre_reqs_desired_state: present
+
+# Ubuntu stuff
+# docker_ubuntu_pre_reqs:
+#   - apt-transport-https
+#   - ca-certificates
+#   - curl
+#   - gnupg
+#   - lsb-release
+# docker_ubuntu_pre_reqs_desired_state: present
 docker_repo_ubuntu_gpg_key: https://download.docker.com/linux/ubuntu/gpg
-docker_repo_ubuntu: "deb [arch={{ ansible_architecture }}] https://download.docker.com/linux/ubuntu {{ ansible_lsb['codename'] }} stable"
-docker_repo_ubuntu_when_x86_64: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb['codename'] }} stable"
-docker_repo_ubuntu_filename: docker-ce
+docker_repo_ubuntu: "deb [arch={{ docker_architecture_map[ansible_architecture] }}] https://download.docker.com/linux/ubuntu {{ ansible_lsb['codename'] }} stable"
+docker_repo_ubuntu_filename: docker
 docker_repo_ubuntu_desired_state: present
+
+# Debian stuff
 docker_debian_pre_reqs:
   - apt-transport-https
   - ca-certificates
   - curl
-  - gnupg2
-  - software-properties-common
+  - gnupg
+  - lsb-release
 docker_debian_pre_reqs_desired_state: present
 docker_repo_debian_gpg_key: https://download.docker.com/linux/debian/gpg
-docker_repo_debian: "deb [arch={{ ansible_architecture }}] https://download.docker.com/linux/debian {{ ansible_lsb['codename'] }} stable"
-docker_repo_debian_when_x86_64: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_lsb['codename'] }} stable"
-docker_repo_debian_filename: docker-ce
+docker_repo_debian: "deb [arch={{ docker_architecture_map[ansible_architecture] }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_lsb['codename'] }} stable"
+docker_repo_debian_filename: docker
 docker_repo_debian_desired_state: present

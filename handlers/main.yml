@@ -1,6 +1,6 @@
 ---
 # handlers file for docker
-# Theese handlers will only run when the virtualization type is NOT docker itself as docker doesn't support/handle systemd very well!
+# These handlers will only run when the virtualization type is NOT docker itself as docker doesn't support/handle systemd very well!
 
 - name: "set_{{ docker_service_name }}_service_state"
   service:

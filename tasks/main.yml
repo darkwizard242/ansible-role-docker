@@ -1,14 +1,16 @@
 ---
 # tasks file for docker
 
-- name: Import install_debian.yml if OS distribution is Debian
+# - name: Import install_debian.yml if OS distribution is Debian
+#   import_tasks: install_debian.yml
+#   when: ansible_distribution == "Debian"
+
+- name: Import install_debian.yml if OS distribution is Debian or Ubuntu
   import_tasks: install_debian.yml
-  when: ansible_distribution == "Debian"
-
-- name: Import install_ubuntu.yml if OS distribution is Ubuntu
-  import_tasks: install_ubuntu.yml
-  when: ansible_distribution == "Ubuntu"
-
+  when: >
+    ansible_distribution == "Debian" or
+    ansible_distribution == "Ubuntu"
+    
 - name: Import install_el.yml if OS distribution is CentOS
   import_tasks: install_el.yml
   when: ansible_distribution == "CentOS"
