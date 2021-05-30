@@ -8,6 +8,7 @@
     name: "{{ docker_service_name }}"
     state: "{{ docker_service_desired_state }}"
   when: ansible_virtualization_type != "docker"
+
 - name: "set_{{ docker_service_name }}_service_boot_state"
   become: true
   service:
