@@ -1,0 +1,16 @@
+---
+# task file to ensure users and groups exists
+
+- name: Ensure group "{{ docker_group }}" exists.
+  group:
+    name: "{{ docker_group }}"
+    state: "{{ docker_group_desired_state }}"
+
+- name: Ensure user "{{ docker_user }}" with group "{{ docker_group }}" exists.
+  user:
+    name: "{{ docker_user }}"
+    comment: Docker user
+    group: "{{ docker_group }}"
+    home: "{{ docker_user_home }}"
+    shell: "{{ docker_user_shell }}"
+    state: "{{ docker_user_desired_state }}"

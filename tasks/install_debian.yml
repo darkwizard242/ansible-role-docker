@@ -1,5 +1,5 @@
 ---
-# tasks file for docker | Debian OS
+# tasks file for docker | Debian
 
 - name: Debian | Ensure group "{{ docker_group }}" exists.
   group:
@@ -40,7 +40,6 @@
     name: "{{ docker_apps }}"
     state: "{{ docker_apps_desired_state }}"
     force_apt_get: yes
-    update_cache: yes
   notify:
     - "set_{{ docker_service_name }}_service_state"
     - "set_{{ docker_service_name }}_service_boot_state"

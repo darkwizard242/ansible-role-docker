@@ -1,20 +1,6 @@
 ---
 # tasks file for docker | EL Family
 
-- name: EL Family | Creating group "{{ docker_group }}" as a pre-requisite for docker
-  group:
-    name: "{{ docker_group }}"
-    state: "{{ docker_group_desired_state }}"
-
-- name: EL Family | Adding (or creating if doesn't exist) desired user "{{ docker_user }}"  to put in group "{{ docker_group }}".
-  user:
-    name: "{{ docker_user }}"
-    comment: Docker user
-    group: "{{ docker_group }}"
-    home: "{{ docker_user_home }}"
-    shell: "{{ docker_user_shell }}"
-    state: "{{ docker_user_desired_state }}"
-
 - name: EL Family | Installing {{ docker_centos_pre_reqs }}
   yum:
     name: "{{ docker_centos_pre_reqs }}"
