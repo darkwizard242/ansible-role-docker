@@ -51,5 +51,5 @@ docker_debian_pre_reqs:
   - lsb-release
 docker_debian_pre_reqs_desired_state: present
 docker_repo_debian: "deb [arch={{ docker_architecture_map[ansible_architecture] }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_lsb['codename'] }} stable"
-docker_repo_debian_filename: docker
+docker_repo_debian_filename: docker-ce
 docker_repo_debian_desired_state: present
