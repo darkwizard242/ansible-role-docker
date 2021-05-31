@@ -1,56 +1,35 @@
 ---
-# tasks file for docker | Debian OS
+# tasks file for docker | Debian
 
-- name: Debian OS | Creating group "{{ docker_group }}" as a pre-requisite for docker
-  group:
-    name: "{{ docker_group }}"
-    state: "{{ docker_group_desired_state }}"
-
-- name: Debian OS | Adding (or creating if doesn't exist) desired user "{{ docker_user }}"  to put in group "{{ docker_group }}".
-  user:
-    name: "{{ docker_user }}"
-    comment: Docker user
-    group: "{{ docker_group }}"
-    home: "{{ docker_user_home }}"
-    shell: "{{ docker_user_shell }}"
-    state: "{{ docker_user_desired_state }}"
-
-- name: Debian OS | Installing {{ docker_debian_pre_reqs }}
+- name: Debian | Installing {{ docker_debian_pre_reqs }}
+  become: true
   apt:
     name: "{{ docker_debian_pre_reqs }}"
     state: "{{ docker_debian_pre_reqs_desired_state }}"
     force_apt_get: yes
     update_cache: yes
 
-- name: Debian OS | Add gpg signing key for {{ docker_apps }}.
+- name: Debian | Ensure docker gpg key exists.
+  become: true
   apt_key:
-    url: "{{ docker_repo_debian_gpg_key }}"
-    state: present
-
-- name: Debian OS | Adding repository "{{ docker_repo_debian_when_x86_64 }}" when system architecture is x86_64.
-  apt_repository:
-    repo: "{{ docker_repo_debian_when_x86_64 }}"
+    url: "{{ docker_repo_gpg_key }}"
     state: "{{ docker_repo_debian_desired_state }}"
-    filename: "{{ docker_repo_debian_filename }}"
-    codename: "{{ ansible_lsb['codename'] }}"
-    update_cache: yes
-  when: ansible_architecture == 'x86_64'
 
-- name: Debian OS | Adding repository "{{ docker_repo_debian }}" when system architecture is not x86_64.
+- name: Debian | Adding docker repository.
+  become: true
   apt_repository:
     repo: "{{ docker_repo_debian }}"
     state: "{{ docker_repo_debian_desired_state }}"
     filename: "{{ docker_repo_debian_filename }}"
     codename: "{{ ansible_lsb['codename'] }}"
     update_cache: yes
-  when: ansible_architecture != 'x86_64'
 
-- name: Debian OS | Installing {{ docker_apps }}
+- name: Debian | Installing {{ docker_apps }}
+  become: true
   apt:
     name: "{{ docker_apps }}"
     state: "{{ docker_apps_desired_state }}"
     force_apt_get: yes
-    update_cache: yes
   notify:
     - "set_{{ docker_service_name }}_service_state"
     - "set_{{ docker_service_name }}_service_boot_state"
