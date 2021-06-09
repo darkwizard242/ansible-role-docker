@@ -4,7 +4,7 @@
   roles:
     - role: darkwizard242.docker
   vars:
-    docker_add_nonroot_users_to_group_boolean: true
+    docker_add_nonroot_users_to_group_boolean: false
     docker_nonroot_users:
       - www-data
       - backup
