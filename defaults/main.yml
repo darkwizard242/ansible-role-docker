@@ -27,6 +27,10 @@ docker_user: docker
 docker_user_home: "/home/{{ docker_user }}"
 docker_user_shell: /bin/bash
 docker_user_desired_state: present
+docker_nonroot_users:
+  - www-data
+  - backup
+docker_add_nonroot_users_to_group_boolean: true
 docker_repo_gpg_key: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
 
 # CentOS Stuff
