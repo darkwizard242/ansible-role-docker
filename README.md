@@ -39,8 +39,8 @@ docker_user_shell: /bin/bash
 docker_user_desired_state: present
 docker_repo_gpg_key: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
 docker_nonroot_users:
-  - www-data
-  - backup
+  - darkwizard242
+  - ubuntu
 docker_add_nonroot_users_to_group_boolean: false
 docker_centos_pre_reqs:
   - device-mapper-persistent-data
@@ -69,7 +69,7 @@ docker_repo_debian_desired_state: present
 ### Variables table:
 
 Variable                                  | Description
------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 docker_architecture_map                   | Variable for system architecture types.
 docker_apps                               | Name of docker application packages require to be installed i.e. `docker-ce, docker-ce-cli, containerd.io`
 docker_apps_desired_state                 | State of the docker_apps packages (i.e. `docker-ce, docker-ce-cli, containerd.io` packages). Whether to install, verify if available or to uninstall (i.e. ansible apt module values: `present`, `latest`, or `absent`)
@@ -84,7 +84,7 @@ docker_user_home                          | Home directory for docker user.
 docker_user_shell                         | Shell for `docker_user`.
 docker_user_desired_state                 | `present` indicates creating the user if it doesn't exist. Alternative is `absent`.
 docker_nonroot_users                      | List of users to add to the `docker` group
-docker_add_nonroot_users_to_group_boolean | Boolean variable. Values can either be `true` or `false`. Setting to `true` will run the task that will add additionally provided users in the variable `docker_nonroot_users` to the `docker` group. If set to `false`, the specific task that adds user to `docker` group will be skipped.
+docker_add_nonroot_users_to_group_boolean | Boolean variable. Values can either be `true` or `false`. Setting to `true` will run the task that will add additionally provided users in the variable `docker_nonroot_users` to the `docker` group. If set to `false`, the specific task that adds user to `docker` group will be skipped. Defaults to `false`
 docker_repo_gpg_key                       | GPG repo for docker repository
 docker_centos_pre_reqs                    | Docker recommends the installation of both these packages on the EL/CentOS docker host system and as such, they are considered pre-requisites.
 docker_centos_pre_reqs_desired_state      | Desired state for Docker pre-requisite apps on EL/CentOS systems.
@@ -122,7 +122,9 @@ For customizing behavior of role (i.e. adding a list of users to be added to doc
     - darkwizard242.docker
   vars:
     docker_add_nonroot_users_to_group_boolean: true
-    docker_nonroot_users: darkwizard242
+    docker_nonroot_users:
+      - darkwizard242
+      - ubuntu
 ```
 
 For customizing behavior of role (i.e. skipping the task that adds a list of users to be added to `docker` group) in ansible playbooks.
