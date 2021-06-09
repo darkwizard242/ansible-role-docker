@@ -17,11 +17,11 @@
     shell: "{{ docker_user_shell }}"
     state: "{{ docker_user_desired_state }}"
 
-- name: Add users "{{ docker_user }}" to group "{{ docker_group }}" if specified.
+- name: Add users "{{ docker_nonroot_users }}" to group "{{ docker_group }}" if specified.
   become: true
   user:
     name: "{{ item }}"
-    group: "{{ docker_group }}"
+    groups: "{{ docker_group }}"
     append: yes
   with_items: "{{ docker_nonroot_users }}"
   # when:
