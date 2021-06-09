@@ -38,6 +38,10 @@ docker_user_home: "/home/{{ docker_user }}"
 docker_user_shell: /bin/bash
 docker_user_desired_state: present
 docker_repo_gpg_key: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
+docker_nonroot_users:
+  - www-data
+  - backup
+docker_add_nonroot_users_to_group_boolean: false
 docker_centos_pre_reqs:
   - device-mapper-persistent-data
   - lvm2
@@ -64,35 +68,37 @@ docker_repo_debian_desired_state: present
 
 ### Variables table:
 
-Variable                             | Description
------------------------------------- | -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-docker_architecture_map              | Variable for system architecture types.
-docker_apps                          | Name of docker application packages require to be installed i.e. `docker-ce, docker-ce-cli, containerd.io`
-docker_apps_desired_state            | State of the docker_apps packages (i.e. `docker-ce, docker-ce-cli, containerd.io` packages). Whether to install, verify if available or to uninstall (i.e. ansible apt module values: `present`, `latest`, or `absent`)
-docker_service_name                  | Default service name for Docker.
-docker_service_desired_state         | Desired state for Docker service.
-docker_service_desired_boot_enabled  | Desired enabled/disabled state for Docker service.
-docker_service_desired_boot_enabled  | Desired enabled/disabled state for Docker service.
-docker_group                         | Name of the group that the docker owner will belong to. Any user that requires using docker app requires to be a member in the `docker` group.
-docker_group_desired_state           | `present` indicates creating the group if it doesn't exist. Alternative is `absent`.
-docker_user                          | Name of the user that the docker will be owned by.
-docker_user_home                     | Home directory for docker user.
-docker_user_shell                    | Shell for `docker_user`.
-docker_user_desired_state            | `present` indicates creating the user if it doesn't exist. Alternative is `absent`.
-docker_repo_gpg_key                  | GPG repo for docker repository
-docker_centos_pre_reqs               | Docker recommends the installation of both these packages on the EL/CentOS docker host system and as such, they are considered pre-requisites.
-docker_centos_pre_reqs_desired_state | Desired state for Docker pre-requisite apps on EL/CentOS systems.
-docker_repo_centos                   | Repository `baseurl` for Docker on EL/CentOS based systems.
-docker_repo_centos_name              | Repository name for Docker on EL/CentOS based systems.
-docker_repo_centos_description       | Description to be added in EL/CentOS based repository file for Docker.
-docker_repo_centos_gpgcheck          | Boolean for whether to perform gpg check against Docker on EL/CentOS based systems.
-docker_repo_centos_enabled           | Boolean to set so that Docker repository is enabled on EL/CentOS based systems.
-docker_repo_centos_filename          | Name of the repository file that will be stored at `/yum/sources.list.d/docker-ce.repo` on EL/CentOS based systems.
-docker_repo_centos_desired_state     | `present` indicates creating the repository file if it doesn't exist on EL/CentOS based systems. Alternative is `absent` (not recommended as it will prevent from installation of **docker** packages).
-docker_debian_pre_reqs_desired_state | Desired state for Docker pre-requisite apps on Debian family systems.
-docker_repo_debian                   | Docker repo URL for Debain systems. Utilized facts such as `ansible_architecture`.
-docker_repo_debain_filename          | Name of the repository file that will be stored at `/etc/apt/sources.list.d/` on Debian based systems.
-docker_repo_debian_desired_state     | `present` indicates creating the repository file if it doesn't exist on Debian based systems. Alternative is `absent` (not recommended as it will prevent from installation of **docker** packages).
+Variable                                  | Description
+----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+docker_architecture_map                   | Variable for system architecture types.
+docker_apps                               | Name of docker application packages require to be installed i.e. `docker-ce, docker-ce-cli, containerd.io`
+docker_apps_desired_state                 | State of the docker_apps packages (i.e. `docker-ce, docker-ce-cli, containerd.io` packages). Whether to install, verify if available or to uninstall (i.e. ansible apt module values: `present`, `latest`, or `absent`)
+docker_service_name                       | Default service name for Docker.
+docker_service_desired_state              | Desired state for Docker service.
+docker_service_desired_boot_enabled       | Desired enabled/disabled state for Docker service.
+docker_service_desired_boot_enabled       | Desired enabled/disabled state for Docker service.
+docker_group                              | Name of the group that the docker owner will belong to. Any user that requires using docker app requires to be a member in the `docker` group.
+docker_group_desired_state                | `present` indicates creating the group if it doesn't exist. Alternative is `absent`.
+docker_user                               | Name of the user that the docker will be owned by.
+docker_user_home                          | Home directory for docker user.
+docker_user_shell                         | Shell for `docker_user`.
+docker_user_desired_state                 | `present` indicates creating the user if it doesn't exist. Alternative is `absent`.
+docker_nonroot_users                      | List of users to add to the `docker` group
+docker_add_nonroot_users_to_group_boolean | Boolean variable. Values can either be `true` or `false`. Setting to `true` will run the task that will add additionally provided users in the variable `docker_nonroot_users` to the `docker` group. If set to `false`, the specific task that adds user to `docker` group will be skipped.
+docker_repo_gpg_key                       | GPG repo for docker repository
+docker_centos_pre_reqs                    | Docker recommends the installation of both these packages on the EL/CentOS docker host system and as such, they are considered pre-requisites.
+docker_centos_pre_reqs_desired_state      | Desired state for Docker pre-requisite apps on EL/CentOS systems.
+docker_repo_centos                        | Repository `baseurl` for Docker on EL/CentOS based systems.
+docker_repo_centos_name                   | Repository name for Docker on EL/CentOS based systems.
+docker_repo_centos_description            | Description to be added in EL/CentOS based repository file for Docker.
+docker_repo_centos_gpgcheck               | Boolean for whether to perform gpg check against Docker on EL/CentOS based systems.
+docker_repo_centos_enabled                | Boolean to set so that Docker repository is enabled on EL/CentOS based systems.
+docker_repo_centos_filename               | Name of the repository file that will be stored at `/yum/sources.list.d/docker-ce.repo` on EL/CentOS based systems.
+docker_repo_centos_desired_state          | `present` indicates creating the repository file if it doesn't exist on EL/CentOS based systems. Alternative is `absent` (not recommended as it will prevent from installation of **docker** packages).
+docker_debian_pre_reqs_desired_state      | Desired state for Docker pre-requisite apps on Debian family systems.
+docker_repo_debian                        | Docker repo URL for Debain systems. Utilized facts such as `ansible_architecture`.
+docker_repo_debain_filename               | Name of the repository file that will be stored at `/etc/apt/sources.list.d/` on Debian based systems.
+docker_repo_debian_desired_state          | `present` indicates creating the repository file if it doesn't exist on Debian based systems. Alternative is `absent` (not recommended as it will prevent from installation of **docker** packages).
 
 ## Dependencies
 
@@ -108,14 +114,25 @@ For default behaviour of role (i.e. installation of **docker** package) in ansib
     - darkwizard242.docker
 ```
 
-For customizing behavior of role (i.e. utilizing an existing or creating a new user to be added to docker group - example shown below is using `darkwizard242` as a user) in ansible playbooks.
+For customizing behavior of role (i.e. adding a list of users to be added to docker group - example shown below is adding `ubuntu` && `darkwizard` to `docker` group) in ansible playbooks.
 
 ```yaml
 - hosts: servers
   roles:
     - darkwizard242.docker
   vars:
-    docker_user: darkwizard242
+    docker_add_nonroot_users_to_group_boolean: true
+    docker_nonroot_users: darkwizard242
+```
+
+For customizing behavior of role (i.e. skipping the task that adds a list of users to be added to `docker` group) in ansible playbooks.
+
+```yaml
+- hosts: servers
+  roles:
+    - darkwizard242.docker
+  vars:
+    docker_add_nonroot_users_to_group_boolean: false
 ```
 
 For customizing behavior of role (i.e. un-installation of **docker-ce, docker-ce-cli, containerd.io** packages) in ansible playbooks.
