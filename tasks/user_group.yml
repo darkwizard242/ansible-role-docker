@@ -24,5 +24,4 @@
     groups: "{{ docker_group }}"
     append: yes
   with_items: "{{ docker_nonroot_users }}"
-  when:
-    - docker_add_nonroot_users_to_group_boolean
+  when: docker_add_nonroot_users
