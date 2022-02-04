@@ -6,8 +6,11 @@ on:
       - 'master'
   push:
     branches:
+      - 'feature*'
       - 'feature_*'
       - 'feature/*'
+      - 'hotfix/*'
+      - 'hotfix*'
       - 'master'
   schedule:
     - cron: '0 14 * * *'
@@ -18,12 +21,12 @@ jobs:
   code_quality:
 
     name: SonarCloud Code Quality Check
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
 
     - name: Checkout source code
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
       with:
         path: 'darkwizard242.docker'
         fetch-depth: 0
@@ -31,6 +34,7 @@ jobs:
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
       with:
+        projectBaseDir: 'darkwizard242.docker'
         args: >
           -Dsonar.projectVersion=${{ github.ref }}_${{ github.run_number }}
       env:
@@ -41,23 +45,23 @@ jobs:
   build:
 
     name: Build & Test
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       max-parallel: 6
       matrix:
-        IMAGE: [ubuntu-18.04, debian-stretch]
+        IMAGE: [ubuntu-18.04, debian-buster, debian-stretch]
 
     steps:
 
     - name: Checkout source code
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
       with:
         path: 'darkwizard242.docker'
 
-    - name: Set up Python 3.8
+    - name: Set up Python 3.10.0
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8
+        python-version: 3.10.0
 
     - name: Update repo cache, install python3-setuptools and required pip modules
       run: |
@@ -66,6 +70,7 @@ jobs:
         pip3 install -U pip wheel ansible molecule[docker] docker ansible-lint flake8 pytest-testinfra
 
     - name: Execute Molecule test of role for ${{ matrix.IMAGE }}
+      working-directory: 'darkwizard242.docker'
       run: DISTRO=${{ matrix.IMAGE }} molecule test
       env:
         PY_COLORS: '1'
