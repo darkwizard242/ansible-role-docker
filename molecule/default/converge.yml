@@ -4,6 +4,7 @@
   roles:
     - role: darkwizard242.docker
   vars:
+    ansible_python_interpreter: /usr/bin/python3
     docker_add_nonroot_users: true
     docker_nonroot_users:
       - www-data
