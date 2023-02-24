@@ -3,7 +3,7 @@
 
 - name: Debian | Installing {{ docker_debian_pre_reqs }}
   become: true
-  apt:
+  ansible.builtin.apt:
     name: "{{ docker_debian_pre_reqs }}"
     state: "{{ docker_debian_pre_reqs_desired_state }}"
     force_apt_get: yes
@@ -11,13 +11,13 @@
 
 - name: Debian | Ensure docker gpg key exists.
   become: true
-  apt_key:
+  ansible.builtin.apt_key:
     url: "{{ docker_repo_gpg_key }}"
     state: "{{ docker_repo_debian_desired_state }}"
 
 - name: Debian | Adding docker repository.
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{ docker_repo_debian }}"
     state: "{{ docker_repo_debian_desired_state }}"
     filename: "{{ docker_repo_debian_filename }}"
@@ -26,7 +26,7 @@
 
 - name: Debian | Installing {{ docker_apps }}
   become: true
-  apt:
+  ansible.builtin.apt:
     name: "{{ docker_apps }}"
     state: "{{ docker_apps_desired_state }}"
     force_apt_get: yes
