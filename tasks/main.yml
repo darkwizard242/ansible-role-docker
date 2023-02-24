@@ -2,18 +2,18 @@
 # tasks file for docker
 
 - name: Import install_debian.yml if OS distribution is Debian
-  import_tasks: user_group.yml
+  ansible.builtin.import_tasks: user_group.yml
   when: >
     ansible_distribution == "Debian" or
     ansible_distribution == "Ubuntu" or
     ansible_distribution == "CentOS"
 
 - name: Import debian task for Debian or Ubuntu
-  import_tasks: install_debian.yml
+  ansible.builtin.import_tasks: install_debian.yml
   when: >
     ansible_distribution == "Debian" or
     ansible_distribution == "Ubuntu"
 
 - name: Import EL family task for CentOS
-  import_tasks: install_el.yml
+  ansible.builtin.import_tasks: install_el.yml
   when: ansible_distribution == "CentOS"

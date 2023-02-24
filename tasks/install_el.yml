@@ -3,14 +3,14 @@
 
 - name: EL Family | Installing {{ docker_centos_pre_reqs }}
   become: true
-  yum:
+  ansible.builtin.yum:
     name: "{{ docker_centos_pre_reqs }}"
     state: "{{ docker_centos_pre_reqs_desired_state }}"
     update_cache: yes
 
 - name: EL Family | Adding stable repository for {{ docker_repo_centos }}
   become: true
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: "{{ docker_repo_centos_name }}"
     description: "{{ docker_repo_centos_description }}"
     baseurl: "{{ docker_repo_centos }}"
@@ -22,7 +22,7 @@
 
 - name: EL Family | Installing {{ docker_apps }}
   become: true
-  yum:
+  ansible.builtin.yum:
     name: "{{ docker_apps }}"
     state: "{{ docker_apps_desired_state }}"
     update_cache: yes

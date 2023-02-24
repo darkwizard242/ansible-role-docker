@@ -3,13 +3,13 @@
 
 - name: Ensure group "{{ docker_group }}" exists.
   become: true
-  group:
+  ansible.builtin.group:
     name: "{{ docker_group }}"
     state: "{{ docker_group_desired_state }}"
 
 - name: Ensure user "{{ docker_user }}" with group "{{ docker_group }}" exists.
   become: true
-  user:
+  ansible.builtin.user:
     name: "{{ docker_user }}"
     comment: Docker user
     group: "{{ docker_group }}"
@@ -19,7 +19,7 @@
 
 - name: Add users "{{ docker_nonroot_users }}" to group "{{ docker_group }}" if specified.
   become: true
-  user:
+  ansible.builtin.user:
     name: "{{ item }}"
     groups: "{{ docker_group }}"
     append: yes
