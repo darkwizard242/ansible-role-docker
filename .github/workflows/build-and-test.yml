@@ -49,7 +49,7 @@ jobs:
     strategy:
       max-parallel: 10
       matrix:
-        IMAGE: [ubuntu-22.04, ubuntu-20.04, ubuntu-18.04, debian-bullseye, debian-buster, debian-stretch]
+        IMAGE: [ubuntu-22.04, ubuntu-20.04, ubuntu-18.04, debian-bullseye, debian-buster]
 
     steps:
 
@@ -67,7 +67,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install python3-setuptools -y
-        pip3 install -U pip wheel ansible molecule[docker] docker ansible-lint flake8 pytest-testinfra
+        pip3 install -U pip wheel ansible molecule molecule-plugins[docker] docker yamllint ansible-lint flake8 pytest-testinfra
 
     - name: Execute Molecule test of role for ${{ matrix.IMAGE }}
       working-directory: 'darkwizard242.docker'
