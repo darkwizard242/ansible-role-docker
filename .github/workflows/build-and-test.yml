@@ -15,6 +15,8 @@ on:
   schedule:
     - cron: '0 14 * * *'
 
+env:
+  CUSTOM_DIR: 'darkwizard242.docker'
 
 jobs:
 
@@ -28,13 +30,13 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v3
       with:
-        path: 'darkwizard242.docker'
+        path: '${{ env.CUSTOM_DIR }}'
         fetch-depth: 0
 
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
       with:
-        projectBaseDir: 'darkwizard242.docker'
+        projectBaseDir: '${{ env.CUSTOM_DIR }}'
         args: >
           -Dsonar.projectVersion=${{ github.ref }}_${{ github.run_number }}
       env:
@@ -56,7 +58,7 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v3
       with:
-        path: 'darkwizard242.docker'
+        path: '${{ env.CUSTOM_DIR }}'
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
@@ -67,10 +69,10 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install python3-setuptools -y
-        pip3 install -U pip wheel ansible molecule molecule-plugins[docker] docker yamllint ansible-lint flake8 pytest-testinfra
+        pip3 install -U -r $CUSTOM_DIR/requirements.txt
 
     - name: Execute Molecule test of role for ${{ matrix.IMAGE }}
-      working-directory: 'darkwizard242.docker'
+      working-directory: '${{ env.CUSTOM_DIR }}'
       run: DISTRO=${{ matrix.IMAGE }} molecule test
       env:
         PY_COLORS: '1'

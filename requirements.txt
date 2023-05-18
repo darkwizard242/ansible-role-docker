@@ -1,0 +1,11 @@
+pip
+wheel
+ansible
+molecule
+molecule-plugins[docker]
+docker
+yamllint
+ansible-lint
+flake8
+pytest-testinfra
+requests<2.29.0

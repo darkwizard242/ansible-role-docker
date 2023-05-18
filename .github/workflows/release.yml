@@ -5,6 +5,9 @@ on:
     tags:
       - '*'
 
+env:
+  CUSTOM_DIR: 'darkwizard242.docker'
+
 jobs:
 
   release:
@@ -17,7 +20,7 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v3
       with:
-        path: 'darkwizard242.docker'
+        path: '${{ env.CUSTOM_DIR }}'
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
@@ -31,5 +34,5 @@ jobs:
         pip3 install -U pip wheel ansible
 
     - name: Import to Ansible Galaxy.
-      working-directory: 'darkwizard242.docker'
+      working-directory: '${{ env.CUSTOM_DIR }}'
       run: ansible-galaxy role import --api-key ${{ secrets.GALAXY_API_KEY }} ${{ github.repository_owner }} $(echo ${{ github.repository }} | sed 's/.*\///')
