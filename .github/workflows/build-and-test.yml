@@ -28,7 +28,7 @@ jobs:
     steps:
 
     - name: Checkout source code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         path: '${{ env.CUSTOM_DIR }}'
         fetch-depth: 0
@@ -51,17 +51,17 @@ jobs:
     strategy:
       max-parallel: 10
       matrix:
-        IMAGE: [ubuntu-22.04, ubuntu-20.04, ubuntu-18.04, debian-bullseye, debian-buster]
+        IMAGE: [ubuntu-24.04, ubuntu-22.04, ubuntu-20.04, ubuntu-18.04, debian-bullseye, debian-buster]
 
     steps:
 
     - name: Checkout source code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         path: '${{ env.CUSTOM_DIR }}'
 
     - name: Set up Python 3.10
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
