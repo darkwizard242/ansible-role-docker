@@ -13,7 +13,6 @@ galaxy_info:
         - noble
         - jammy
         - focal
-        - bionic
     - name: Debian
       versions:
         - bullseye
@@ -21,7 +20,6 @@ galaxy_info:
     - name: EL
       versions:
         - 8
-        - 7
 
   galaxy_tags:
     - docker

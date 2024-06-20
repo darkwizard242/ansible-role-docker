@@ -51,7 +51,7 @@ jobs:
     strategy:
       max-parallel: 10
       matrix:
-        IMAGE: [ubuntu-24.04, ubuntu-22.04, ubuntu-20.04, ubuntu-18.04, debian-bullseye, debian-buster]
+        IMAGE: [ubuntu-24.04, ubuntu-22.04, ubuntu-20.04, debian-bullseye, debian-buster]
 
     steps:
 
